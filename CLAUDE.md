@@ -190,6 +190,14 @@ Create fixture `.env` files in `tests/fixtures/` for test cases.
 - Always align docs (README.md, website/, docs/) to any code or config change before committing and pushing.
 - If a change affects install commands, CLI usage, package name, or any user-facing behavior, update all relevant documentation files.
 
+## Pre-commit Checklist
+
+Always run these steps before committing:
+
+1. Run tests: `node --test tests/`
+2. Update docs if the change affects user-facing behavior (README.md, website/, docs/, CLAUDE.md)
+3. Commit
+
 ## Git Commit Conventions
 
 ## Format
