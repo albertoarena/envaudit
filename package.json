@@ -4,7 +4,7 @@
   "description": "Zero-dependency CLI to audit, compare and sync .env files",
   "type": "module",
   "bin": {
-    "envaudit": "./bin/envaudit.js"
+    "envaudit": "bin/envaudit.js"
   },
   "keywords": ["env", "dotenv", "lint", "diff", "cli", "audit", "secrets"],
   "license": "MIT",
