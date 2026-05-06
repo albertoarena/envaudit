@@ -62,7 +62,9 @@ describe('looksLikeSecret', () => {
   })
 
   it('flags base64-like long strings', () => {
-    assert.equal(looksLikeSecret('YWJjZGVmZ2hpamtsbW5vcHFycw'), true)
+    assert.equal(looksLikeSecret('YWJjZGVmZ2hp1mts2W5vcH3ycw'), true)
+    assert.equal(looksLikeSecret('catalogsuggestionsblock'), false)
+    assert.equal(looksLikeSecret('AcmeCorporationCatalogV2B'), false)
   })
 
   it('flags mixed-case strings with digits and special chars', () => {

@@ -42,7 +42,11 @@ function looksLikeSecret(value) {
   if (isSafeValue(value)) return false
 
   // Base64-like long alphanumeric strings (20+ chars)
-  if (value.length >= 20 && /^[A-Za-z0-9+/=_-]+$/.test(value)) return true
+  // Require enough digit density to distinguish real tokens from words/names
+  if (value.length >= 20 && /^[A-Za-z0-9+/=_-]+$/.test(value)) {
+    const digitCount = (value.match(/[0-9]/g) || []).length
+    if (digitCount / value.length >= 0.1) return true
+  }
 
   // Mixed case + digits + special chars, longer than 12
   if (value.length > 12) {
