@@ -1,0 +1,46 @@
+---
+title: Missing Variables
+description: Keys in .env.example but not in .env
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+## What it detects
+
+Keys that are defined in `.env.example` but absent from `.env`. These are variables your application expects but that have not been configured.
+
+<Aside type="danger">
+Missing variables are reported as **errors** because they are likely to cause runtime failures.
+</Aside>
+
+## Example
+
+Given `.env.example`:
+```
+APP_NAME=myapp
+API_KEY=
+REDIS_URL=
+```
+
+And `.env`:
+```
+APP_NAME=myapp
+```
+
+envaudit reports:
+```
+Missing variables (in .env.example but not in .env)
+  ✗ API_KEY
+  ✗ REDIS_URL
+```
+
+## Why it matters
+
+A missing variable typically means your app will either:
+- Crash on startup when it tries to read the variable
+- Silently use a fallback that behaves differently from production
+- Fail at runtime when a code path that uses the variable is reached
+
+## Fix
+
+Add the missing keys to your `.env` file, or run `envaudit sync` to add them automatically with empty values.

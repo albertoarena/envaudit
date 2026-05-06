@@ -1,0 +1,32 @@
+---
+title: Quickstart
+description: Get started with envaudit in 30 seconds
+---
+
+## Run it now
+
+No installation needed — just use npx:
+
+```bash
+npx envaudit check
+```
+
+This compares `.env` against `.env.example` in your current directory and reports:
+- Missing variables (errors)
+- Leaked secrets in `.env.example` (errors)
+- Undocumented variables (warnings)
+- Empty values (warnings)
+
+## CI mode
+
+Exit with code 1 if any errors are found:
+
+```bash
+npx envaudit check --ci
+```
+
+## What's next?
+
+- [Install globally](/envaudit/getting-started/installation/) for faster repeated use
+- [Explore all commands](/envaudit/commands/check/) — check, diff, sync, doc
+- [Add to your CI pipeline](/envaudit/getting-started/ci-integration/)

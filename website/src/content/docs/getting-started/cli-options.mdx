@@ -1,0 +1,34 @@
+---
+title: CLI Options
+description: All flags and options available in envaudit
+---
+
+## Global options
+
+| Flag | Description |
+|------|-------------|
+| `--env <path>` | Path to `.env` file (default: `.env`) |
+| `--example <path>` | Path to `.env.example` file (default: `.env.example`) |
+| `--no-color` | Disable colored output |
+| `--help`, `-h` | Show help message |
+| `--version`, `-v` | Show version |
+
+## Command-specific options
+
+### check
+
+| Flag | Description |
+|------|-------------|
+| `--ci` | Exit with code 1 if any errors are found |
+
+### sync
+
+| Flag | Description |
+|------|-------------|
+| `--dry-run` | Preview changes without writing to files |
+
+## Environment variables
+
+| Variable | Description |
+|----------|-------------|
+| `NO_COLOR` | Disable colored output (see [no-color.org](https://no-color.org)) |

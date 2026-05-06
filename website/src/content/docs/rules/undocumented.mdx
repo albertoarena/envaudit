@@ -1,0 +1,45 @@
+---
+title: Undocumented Variables
+description: Keys in .env but not in .env.example
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+## What it detects
+
+Keys that exist in `.env` but are not listed in `.env.example`. These are variables that other developers won't know about when setting up the project.
+
+<Aside type="caution">
+Undocumented variables are reported as **warnings**. They won't crash anything, but they make onboarding harder.
+</Aside>
+
+## Example
+
+Given `.env.example`:
+```
+APP_NAME=
+DB_HOST=
+```
+
+And `.env`:
+```
+APP_NAME=myapp
+DB_HOST=localhost
+DEBUG_MODE=true
+FEATURE_FLAG_X=1
+```
+
+envaudit reports:
+```
+Undocumented variables (in .env but not in .env.example)
+  ⚠ DEBUG_MODE
+  ⚠ FEATURE_FLAG_X
+```
+
+## Why it matters
+
+When a new developer clones the project, they copy `.env.example` to `.env`. If variables are missing from `.env.example`, the new developer won't know to set them, leading to subtle differences between environments.
+
+## Fix
+
+Add the missing keys to `.env.example` with placeholder values, or run `envaudit sync` to add them automatically.

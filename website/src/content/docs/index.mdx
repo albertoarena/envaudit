@@ -1,0 +1,82 @@
+---
+title: What is envaudit?
+description: Zero-dependency CLI to audit, compare and sync .env files
+template: splash
+hero:
+  tagline: Catch missing variables, leaked secrets, and env drift before they break your app. Zero dependencies, runs in milliseconds.
+  actions:
+    - text: Get Started
+      link: /envaudit/getting-started/installation/
+      icon: right-arrow
+      variant: primary
+    - text: Commands
+      link: /envaudit/commands/check/
+      variant: secondary
+    - text: View on GitHub
+      link: https://github.com/albertoarena/envaudit
+      icon: external
+      variant: minimal
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+## Why envaudit?
+
+`.env` files are critical but fragile. A missing variable can crash your app in production. A real secret in `.env.example` can end up on GitHub. envaudit catches these problems automatically.
+
+<CardGrid stagger>
+  <Card title="Audit" icon="approve-check">
+    Compare `.env` against `.env.example` — find missing variables, undocumented keys, empty values, and leaked secrets in one command.
+  </Card>
+  <Card title="Diff" icon="list-format">
+    Compare any two env files side by side. Secret-looking values are automatically masked in the output.
+  </Card>
+  <Card title="Sync" icon="sync">
+    Add missing keys from `.env.example` to `.env` and vice versa. Preview changes with `--dry-run` before writing.
+  </Card>
+  <Card title="Document" icon="document">
+    Generate a markdown table of all env variables, grouped by prefix, with columns for required status, defaults, and grouping.
+  </Card>
+  <Card title="Secret Detection" icon="warning">
+    Flags real secrets in `.env.example` (API keys, tokens, AWS credentials) while ignoring common placeholders like `changeme` or `your-key-here`.
+  </Card>
+  <Card title="Zero Dependencies" icon="rocket">
+    No npm packages. Only Node.js built-in modules. Installs instantly, runs in milliseconds, never breaks due to dependency updates.
+  </Card>
+</CardGrid>
+
+---
+
+## Quick Example
+
+```bash
+$ envaudit check
+
+Missing variables (in .env.example but not in .env)
+  ✗ API_KEY
+  ✗ REDIS_URL
+
+Possible secrets in example file
+  ✗ STRIPE_KEY has a value that looks like a real secret
+
+Undocumented variables (in .env but not in .env.example)
+  ⚠ DEBUG_MODE
+
+Empty values
+  ⚠ SECRET_KEY
+
+4 issues found (3 errors · 1 warning)
+```
+
+---
+
+## Next Steps
+
+<CardGrid>
+  <Card title="Installation" icon="rocket">
+    [Install envaudit](/envaudit/getting-started/installation/) globally or use it with npx — takes seconds.
+  </Card>
+  <Card title="CI Integration" icon="setting">
+    [Add to your pipeline](/envaudit/getting-started/ci-integration/) to catch env issues before they reach production.
+  </Card>
+</CardGrid>

@@ -1,0 +1,42 @@
+---
+title: Empty Values
+description: Keys with empty values in .env
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+## What it detects
+
+Keys in `.env` that have no value assigned (`KEY=` or `KEY=""`).
+
+<Aside type="caution">
+Empty values are reported as **warnings**. They may be intentional, but are often a sign of incomplete configuration.
+</Aside>
+
+## Example
+
+Given `.env`:
+```
+APP_NAME=myapp
+DB_HOST=localhost
+SECRET_KEY=
+API_TOKEN=
+```
+
+envaudit reports:
+```
+Empty values
+  ⚠ SECRET_KEY
+  ⚠ API_TOKEN
+```
+
+## Why it matters
+
+An empty value is different from a missing variable — the key exists, so your app won't crash looking for it, but the empty string may cause unexpected behaviour:
+- Authentication failures
+- Empty API requests
+- Silent feature disabling
+
+## When empty values are intentional
+
+Some variables are legitimately empty (e.g. an optional feature toggle or a prefix that defaults to empty). In these cases, the warning can be safely ignored.

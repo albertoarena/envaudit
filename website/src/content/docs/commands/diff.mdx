@@ -1,0 +1,45 @@
+---
+title: diff
+description: Compare any two env files side by side
+---
+
+Compare any two `.env` files and see what's different.
+
+## Usage
+
+```bash
+envaudit diff .env.staging .env.production
+envaudit diff .env .env.local
+```
+
+## What it shows
+
+- **Keys only in file 1** — present in the first file but missing from the second
+- **Keys only in file 2** — present in the second file but missing from the first
+- **Different values** — keys present in both files but with different values
+
+Values that look like secrets are automatically masked in the output (first 3 characters shown, rest replaced with `***`).
+
+## Output example
+
+```
+Only in .env.staging
+  - STAGING_FLAG
+
+Only in .env.production
+  + CDN_URL
+
+Different values
+  DB_HOST
+    - staging-db.internal
+    + prod-db.internal
+  API_KEY
+    - sk_***
+    + sk_***
+```
+
+If the files are identical:
+
+```
+✓ Files are identical
+```

@@ -1,0 +1,50 @@
+---
+title: doc
+description: Generate markdown documentation for env variables
+---
+
+Generates a markdown table documenting all environment variables, grouped by prefix.
+
+## Usage
+
+```bash
+envaudit doc
+envaudit doc > ENV.md
+envaudit doc --example .env.example.production
+```
+
+## Output format
+
+The command outputs a markdown table to stdout with four columns:
+
+| Column | Description |
+|--------|-------------|
+| Variable | The environment variable name |
+| Required | `Yes` if defined in `.env.example`, `No` otherwise |
+| Default | Default value from `.env.example`, or `-` if empty |
+| Group | Prefix before the first underscore (e.g. `DB`, `APP`, `AWS`) |
+
+Variables are sorted alphabetically within each group, and groups are sorted alphabetically.
+
+## Output example
+
+```markdown
+# Environment Variables
+
+| Variable | Required | Default | Group |
+|----------|----------|---------|-------|
+| APP_DEBUG | Yes | true | APP |
+| APP_NAME | Yes | myapp | APP |
+| APP_PORT | Yes | 3000 | APP |
+| DB_HOST | Yes | localhost | DB |
+| DB_PASS | Yes | - | DB |
+| DB_PORT | Yes | 5432 | DB |
+| DB_USER | Yes | - | DB |
+```
+
+## Options
+
+| Flag | Description |
+|------|-------------|
+| `--env <path>` | Path to `.env` file (default: `.env`) |
+| `--example <path>` | Path to `.env.example` (default: `.env.example`) |

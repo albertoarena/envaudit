@@ -1,0 +1,30 @@
+---
+title: CI Integration
+description: Add envaudit to your CI pipeline
+---
+
+Use `--ci` to exit with code 1 when errors are found, and `--no-color` for clean log output.
+
+## GitHub Actions
+
+```yaml
+- name: Audit env files
+  run: npx envaudit check --ci --no-color
+```
+
+## GitLab CI
+
+```yaml
+audit-env:
+  script:
+    - npx envaudit check --ci --no-color
+```
+
+## Other CI systems
+
+envaudit works in any environment with Node.js >= 18. The `--ci` flag ensures the build fails when:
+
+- Variables are defined in `.env.example` but missing from `.env`
+- Real secrets are detected in `.env.example`
+
+Warnings (undocumented variables, empty values) are reported but do not cause a non-zero exit code.

@@ -1,0 +1,54 @@
+---
+title: sync
+description: Sync missing keys between .env and .env.example
+---
+
+Adds missing keys in both directions to keep `.env` and `.env.example` in sync.
+
+## Usage
+
+```bash
+envaudit sync
+envaudit sync --dry-run
+envaudit sync --env .env.local --example .env.example
+```
+
+## What it does
+
+1. Keys in `.env.example` but missing from `.env` are appended to `.env` with empty values
+2. Keys in `.env` but missing from `.env.example` are appended to `.env.example` with empty values
+
+Existing content is never modified or reordered — new keys are appended at the end.
+
+## Options
+
+| Flag | Description |
+|------|-------------|
+| `--env <path>` | Path to `.env` file (default: `.env`) |
+| `--example <path>` | Path to `.env.example` (default: `.env.example`) |
+| `--dry-run` | Preview changes without writing to files |
+
+## Output example
+
+```
+Adding to .env
+  ✓ API_KEY
+  ✓ REDIS_URL
+
+Adding to .env.example
+  ✓ DEBUG_MODE
+
+Sync complete
+```
+
+With `--dry-run`:
+
+```
+Adding to .env
+  [dry-run] ✓ API_KEY
+
+Adding to .env.example
+  [dry-run] ✓ DEBUG_MODE
+
+No files were modified (dry run)
+```
