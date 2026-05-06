@@ -1,0 +1,6 @@
+node_modules/
+.docs/
+.idea/
+*.iml
+.DS_Store
+.claude/

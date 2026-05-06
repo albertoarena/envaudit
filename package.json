@@ -1,0 +1,26 @@
+{
+  "name": "envaudit",
+  "version": "0.1.0",
+  "description": "Zero-dependency CLI to audit, compare and sync .env files",
+  "type": "module",
+  "bin": {
+    "envaudit": "./bin/envaudit.js"
+  },
+  "keywords": ["env", "dotenv", "lint", "diff", "cli", "audit", "secrets"],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/albertoarena/envaudit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/albertoarena/envaudit/issues"
+  },
+  "homepage": "https://github.com/albertoarena/envaudit#readme",
+  "engines": {
+    "node": ">=18"
+  },
+  "files": ["bin/", "src/", "README.md", "LICENSE"],
+  "scripts": {
+    "test": "node --test tests/"
+  }
+}
