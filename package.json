@@ -1,6 +1,6 @@
 {
   "name": "@albertoarena/envaudit",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Zero-dependency CLI to audit, compare and sync .env files",
   "type": "module",
   "bin": {
