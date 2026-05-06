@@ -158,7 +158,7 @@ Create fixture `.env` files in `tests/fixtures/` for test cases.
 ```json
 {
   "name": "@albertoarena/envaudit",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Zero-dependency CLI to audit, compare and sync .env files",
   "type": "module",
   "bin": {
