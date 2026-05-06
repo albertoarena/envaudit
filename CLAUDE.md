@@ -157,12 +157,12 @@ Create fixture `.env` files in `tests/fixtures/` for test cases.
 
 ```json
 {
-  "name": "envaudit",
-  "version": "0.1.0",
+  "name": "@albertoarena/envaudit",
+  "version": "0.1.2",
   "description": "Zero-dependency CLI to audit, compare and sync .env files",
   "type": "module",
   "bin": {
-    "envaudit": "./bin/envaudit.js"
+    "envaudit": "bin/envaudit.js"
   },
   "keywords": ["env", "dotenv", "lint", "diff", "cli", "audit", "secrets"],
   "license": "MIT",
@@ -184,6 +184,11 @@ Create fixture `.env` files in `tests/fixtures/` for test cases.
 - Do not add AI or LLM features.
 - Do not over-engineer. This is a simple tool that parses text files and compares them.
 - Do not add interactive prompts (no readline for user input). Keep it non-interactive.
+
+## Documentation
+
+- Always align docs (README.md, website/, docs/) to any code or config change before committing and pushing.
+- If a change affects install commands, CLI usage, package name, or any user-facing behavior, update all relevant documentation files.
 
 ## Git Commit Conventions
 

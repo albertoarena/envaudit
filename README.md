@@ -10,10 +10,10 @@ Compares `.env` against `.env.example`, detects missing variables, undocumented 
 
 ```bash
 # Install globally
-npm install -g envaudit
+npm install -g @albertoarena/envaudit
 
 # Or run directly with npx
-npx envaudit check
+npx @albertoarena/envaudit check
 ```
 
 ## Usage
@@ -74,14 +74,14 @@ Add to your CI pipeline to catch env mismatches early:
 ```yaml
 # GitHub Actions
 - name: Check env files
-  run: npx envaudit check --ci --no-color
+  run: npx @albertoarena/envaudit check --ci --no-color
 ```
 
 ```yaml
 # GitLab CI
 check-env:
   script:
-    - npx envaudit check --ci --no-color
+    - npx @albertoarena/envaudit check --ci --no-color
 ```
 
 ## Options

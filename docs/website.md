@@ -139,8 +139,8 @@ import { Card, CardGrid, Tabs, TabItem } from '@astrojs/starlight/components';
 </CardGrid>
 
 <Tabs>
-  <TabItem label="npm">npm install envaudit</TabItem>
-  <TabItem label="npx">npx envaudit check</TabItem>
+  <TabItem label="npm">npm install @albertoarena/envaudit</TabItem>
+  <TabItem label="npx">npx @albertoarena/envaudit check</TabItem>
 </Tabs>
 ```
 

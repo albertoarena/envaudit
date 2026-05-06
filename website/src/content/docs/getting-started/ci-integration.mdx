@@ -9,7 +9,7 @@ Use `--ci` to exit with code 1 when errors are found, and `--no-color` for clean
 
 ```yaml
 - name: Audit env files
-  run: npx envaudit check --ci --no-color
+  run: npx @albertoarena/envaudit check --ci --no-color
 ```
 
 ## GitLab CI
@@ -17,7 +17,7 @@ Use `--ci` to exit with code 1 when errors are found, and `--no-color` for clean
 ```yaml
 audit-env:
   script:
-    - npx envaudit check --ci --no-color
+    - npx @albertoarena/envaudit check --ci --no-color
 ```
 
 ## Other CI systems
