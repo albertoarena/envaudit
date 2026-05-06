@@ -55,6 +55,7 @@ Flags:
 - `--env <path>` — path to .env file (default: `.env`)
 - `--example <path>` — path to .env.example file (default: `.env.example`)
 - `--ci` — exit code 1 if any errors found (for CI pipelines)
+- `--ignore-empty` — skip empty value warnings (useful in CI where secrets are injected at runtime)
 - `--no-color` — disable colored output
 
 Output categories:
@@ -158,7 +159,7 @@ Create fixture `.env` files in `tests/fixtures/` for test cases.
 ```json
 {
   "name": "@albertoarena/envaudit",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Zero-dependency CLI to audit, compare and sync .env files",
   "type": "module",
   "bin": {

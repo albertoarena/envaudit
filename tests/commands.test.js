@@ -53,6 +53,17 @@ describe('check command', () => {
     assert.equal(process.exitCode, 1)
   })
 
+  it('skips empty value warnings with ignoreEmpty option', () => {
+    const output = captureOutput(() => {
+      check({
+        env: join(fixtures, '.env.basic'),
+        example: join(fixtures, '.env.example.basic'),
+        ignoreEmpty: true,
+      })
+    })
+    assert.ok(!output.includes('Empty values'))
+  })
+
   it('reports error for missing env file', () => {
     const output = captureOutput(() => {
       check({ env: '/nonexistent/.env' })

@@ -40,3 +40,11 @@ An empty value is different from a missing variable — the key exists, so your 
 ## When empty values are intentional
 
 Some variables are legitimately empty (e.g. an optional feature toggle or a prefix that defaults to empty). In these cases, the warning can be safely ignored.
+
+## Suppressing in CI
+
+In CI pipelines, `.env` values are often intentionally empty because secrets are injected at runtime. Use `--ignore-empty` to skip these warnings:
+
+```bash
+envaudit check --ci --no-color --ignore-empty
+```

@@ -75,6 +75,10 @@ Add to your CI pipeline to catch env mismatches early:
 # GitHub Actions
 - name: Check env files
   run: npx @albertoarena/envaudit check --ci --no-color
+
+# Skip empty value warnings (secrets injected at runtime)
+- name: Check env files
+  run: npx @albertoarena/envaudit check --ci --no-color --ignore-empty
 ```
 
 ```yaml
@@ -91,6 +95,7 @@ check-env:
 | `--env <path>` | Path to .env file (default: `.env`) |
 | `--example <path>` | Path to .env.example (default: `.env.example`) |
 | `--ci` | Exit with code 1 if errors found |
+| `--ignore-empty` | Skip empty value warnings (useful in CI) |
 | `--dry-run` | Show sync changes without writing |
 | `--no-color` | Disable colored output |
 | `--help, -h` | Show help |

@@ -59,12 +59,14 @@ function check(options = {}) {
   }
 
   // Warnings: empty values
-  const empty = findEmpty(envMap)
-  if (empty.length > 0) {
-    console.log(`\n${colors.bold('Empty values')}`)
-    for (const key of empty) {
-      console.log(`  ${symbols.warning} ${key}`)
-      warningCount++
+  if (!options.ignoreEmpty) {
+    const empty = findEmpty(envMap)
+    if (empty.length > 0) {
+      console.log(`\n${colors.bold('Empty values')}`)
+      for (const key of empty) {
+        console.log(`  ${symbols.warning} ${key}`)
+        warningCount++
+      }
     }
   }
 

@@ -67,6 +67,13 @@ describe('looksLikeSecret', () => {
     assert.equal(looksLikeSecret('AcmeCorporationCatalogV2B'), false)
   })
 
+  it('ignores slug-like identifiers', () => {
+    assert.equal(looksLikeSecret('claude-sonnet-4-20250514'), false)
+    assert.equal(looksLikeSecret('gpt-4o-mini-2024-07-18'), false)
+    assert.equal(looksLikeSecret('my-app-service-v2.1'), false)
+    assert.equal(looksLikeSecret('us-east-1a'), false)
+  })
+
   it('flags mixed-case strings with digits and special chars', () => {
     assert.equal(looksLikeSecret('aB3$dEfGhI9kLmN!'), true)
   })

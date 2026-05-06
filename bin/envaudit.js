@@ -31,6 +31,7 @@ Options:
   --env <path>         Path to .env file (default: .env)
   --example <path>     Path to .env.example file (default: .env.example)
   --ci                 Exit with code 1 if errors found
+  --ignore-empty       Skip empty value warnings (useful in CI)
   --dry-run            Show what sync would change without writing
   --no-color           Disable colored output
   --help, -h           Show this help message
@@ -50,6 +51,7 @@ if (hasFlag('--help') || hasFlag('-h') || !command) {
     env: getFlag('--env'),
     example: getFlag('--example'),
     ci: hasFlag('--ci'),
+    ignoreEmpty: hasFlag('--ignore-empty'),
   })
 } else if (command === 'diff') {
   const positional = args.filter((a) => !a.startsWith('--'))

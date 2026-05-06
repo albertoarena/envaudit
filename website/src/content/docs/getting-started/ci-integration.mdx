@@ -10,6 +10,10 @@ Use `--ci` to exit with code 1 when errors are found, and `--no-color` for clean
 ```yaml
 - name: Audit env files
   run: npx @albertoarena/envaudit check --ci --no-color
+
+# Skip empty value warnings (secrets injected at runtime)
+- name: Audit env files
+  run: npx @albertoarena/envaudit check --ci --no-color --ignore-empty
 ```
 
 ## GitLab CI

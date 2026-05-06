@@ -14,6 +14,12 @@ function isPlaceholder(value) {
   return PLACEHOLDER_PATTERNS.some((p) => lower.includes(p))
 }
 
+function isSlugOrIdentifier(value) {
+  const parts = value.split('-')
+  if (parts.length < 3) return false
+  return parts.every((p) => p.length > 0 && /^[A-Za-z0-9_.]+$/.test(p))
+}
+
 function isSafeValue(value) {
   if (!value || value.length === 0) return true
 
@@ -27,6 +33,9 @@ function isSafeValue(value) {
   if (value.length <= 8) return true
 
   if (isPlaceholder(value)) return true
+
+  // Slug-like identifiers (e.g. claude-sonnet-4-20250514, my-app-v2.1)
+  if (isSlugOrIdentifier(value)) return true
 
   return false
 }
