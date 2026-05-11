@@ -73,6 +73,40 @@ describe('check command', () => {
   })
 })
 
+describe('check command — unquoted spaces', () => {
+  let check
+  beforeEach(async () => {
+    const mod = await import('../src/commands/check.js')
+    check = mod.check
+    process.exitCode = undefined
+  })
+
+  it('detects unquoted values with spaces', () => {
+    const output = captureOutput(() => {
+      check({
+        env: join(fixtures, '.env.unquoted-spaces'),
+        example: join(fixtures, '.env.example.basic'),
+      })
+    })
+    assert.ok(output.includes('Unquoted values with spaces'))
+    assert.ok(output.includes('APP_NAME'))
+    assert.ok(output.includes('TITLE'))
+    assert.ok(output.includes('SPACED_COMMENT'))
+    assert.ok(output.includes('Wrap in quotes'))
+  })
+
+  it('sets exit code 1 with --ci when unquoted spaces found', () => {
+    captureOutput(() => {
+      check({
+        env: join(fixtures, '.env.unquoted-spaces'),
+        example: join(fixtures, '.env.unquoted-spaces'),
+        ci: true,
+      })
+    })
+    assert.equal(process.exitCode, 1)
+  })
+})
+
 describe('diff command', () => {
   let diff
   beforeEach(async () => {

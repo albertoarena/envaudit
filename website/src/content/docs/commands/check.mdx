@@ -19,6 +19,7 @@ envaudit check --ci
 
 - **Missing variables** — keys defined in `.env.example` but absent from `.env`
 - **Leaked secrets** — values in `.env.example` that look like real secrets (API keys, tokens, etc.)
+- **Unquoted spaces** — values in `.env` that contain spaces but are not wrapped in quotes
 
 ### Warnings
 
@@ -35,13 +36,17 @@ Missing variables (in .env.example but not in .env)
 Possible secrets in example file
   ✗ STRIPE_KEY has a value that looks like a real secret
 
+Unquoted values with spaces (in .env)
+  ✗ APP_TITLE (line 5)
+    Wrap in quotes: APP_TITLE="My Application"
+
 Undocumented variables (in .env but not in .env.example)
   ⚠ DEBUG_MODE
 
 Empty values
   ⚠ SECRET_KEY
 
-4 issues found (3 errors · 1 warning)
+5 issues found (4 errors · 1 warning)
 ```
 
 ## Options

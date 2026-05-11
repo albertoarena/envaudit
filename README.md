@@ -32,7 +32,7 @@ envaudit check --ci
 ```
 
 Output categories:
-- **Errors (✗):** Missing variables, possible secrets in `.env.example`
+- **Errors (✗):** Missing variables, possible secrets in `.env.example`, unquoted values with spaces
 - **Warnings (⚠):** Undocumented variables, empty values
 
 ### Diff

@@ -1,0 +1,66 @@
+---
+title: Unquoted Spaces
+description: Values containing spaces that are not wrapped in quotes
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+## What it detects
+
+Values in `.env` that contain spaces but are not wrapped in quotes (`"..."` or `'...'`).
+
+<Aside type="danger">
+Unquoted values with spaces are reported as **errors**. Most dotenv parsers will fail at runtime when encountering them, causing application crashes on startup.
+</Aside>
+
+## Example
+
+Given `.env`:
+```
+APP_NAME=My Application
+APP_ENV=production
+DB_HOST=localhost
+TITLE=Hello World
+```
+
+envaudit reports:
+```
+Unquoted values with spaces (in .env)
+  ✗ APP_NAME (line 1)
+    Wrap in quotes: APP_NAME="My Application"
+  ✗ TITLE (line 4)
+    Wrap in quotes: TITLE="Hello World"
+```
+
+## Why it matters
+
+Most dotenv parsers (PHP, Ruby, and some Node.js implementations) treat unquoted spaces as a syntax error:
+
+```
+The environment file is invalid!
+Failed to parse dotenv file. Encountered unexpected whitespace at [My Application].
+```
+
+This is a common issue when deployment tools generate `.env` values via `sed` or templating without wrapping them in quotes. The error only surfaces at runtime, often in production.
+
+## How to fix
+
+Wrap the value in double or single quotes:
+
+```diff
+- APP_NAME=My Application
++ APP_NAME="My Application"
+```
+
+Both double quotes and single quotes are accepted:
+
+```
+APP_NAME="My Application"
+APP_NAME='My Application'
+```
+
+## Edge cases
+
+- `KEY=value # comment` — the inline comment is stripped before checking; `value` has no space, so this is fine
+- `KEY=two words # comment` — `two words` has a space, so this is flagged
+- `export KEY=My App` — the `export` prefix is stripped; the unquoted space is detected

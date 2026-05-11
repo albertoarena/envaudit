@@ -49,6 +49,7 @@ export default defineConfig({
             { label: 'Undocumented Variables', link: '/rules/undocumented/' },
             { label: 'Empty Values', link: '/rules/empty-values/' },
             { label: 'Secret Detection', link: '/rules/secrets/' },
+            { label: 'Unquoted Spaces', link: '/rules/unquoted-spaces/' },
           ],
         },
       ],

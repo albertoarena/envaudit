@@ -4,6 +4,7 @@ import { findMissing } from '../src/rules/missing.js'
 import { findUndocumented } from '../src/rules/undocumented.js'
 import { findEmpty } from '../src/rules/empty-values.js'
 import { findSecrets, looksLikeSecret } from '../src/rules/secrets.js'
+import { findUnquotedSpaces } from '../src/rules/unquoted-spaces.js'
 
 describe('findMissing', () => {
   it('finds keys in example but not in env', () => {
@@ -88,5 +89,95 @@ describe('findSecrets', () => {
     const result = findSecrets(example)
     assert.equal(result.length, 1)
     assert.equal(result[0].key, 'DANGEROUS')
+  })
+})
+
+describe('findUnquotedSpaces', () => {
+  it('flags unquoted values with spaces', () => {
+    const content = 'APP_NAME=My Application\nAPP_ENV=production\n'
+    const result = findUnquotedSpaces(content)
+    assert.equal(result.length, 1)
+    assert.equal(result[0].key, 'APP_NAME')
+    assert.equal(result[0].value, 'My Application')
+    assert.equal(result[0].line, 1)
+  })
+
+  it('flags multiple unquoted values', () => {
+    const content = 'A=one two\nB=three four five\n'
+    const result = findUnquotedSpaces(content)
+    assert.equal(result.length, 2)
+    assert.equal(result[0].key, 'A')
+    assert.equal(result[1].key, 'B')
+  })
+
+  it('skips double-quoted values', () => {
+    const content = 'APP_NAME="My Application"\n'
+    const result = findUnquotedSpaces(content)
+    assert.equal(result.length, 0)
+  })
+
+  it('skips single-quoted values', () => {
+    const content = "APP_NAME='My Application'\n"
+    const result = findUnquotedSpaces(content)
+    assert.equal(result.length, 0)
+  })
+
+  it('skips values without spaces', () => {
+    const content = 'APP_ENV=production\nDB_PORT=5432\n'
+    const result = findUnquotedSpaces(content)
+    assert.equal(result.length, 0)
+  })
+
+  it('skips empty values', () => {
+    const content = 'APP_NAME=\nAPI_KEY=\n'
+    const result = findUnquotedSpaces(content)
+    assert.equal(result.length, 0)
+  })
+
+  it('skips comment lines', () => {
+    const content = '# This is a comment with spaces\n'
+    const result = findUnquotedSpaces(content)
+    assert.equal(result.length, 0)
+  })
+
+  it('skips empty lines', () => {
+    const content = '\n  \n'
+    const result = findUnquotedSpaces(content)
+    assert.equal(result.length, 0)
+  })
+
+  it('ignores inline comment when checking for spaces', () => {
+    const content = 'KEY=value # this is a comment\n'
+    const result = findUnquotedSpaces(content)
+    assert.equal(result.length, 0)
+  })
+
+  it('flags value with spaces before inline comment', () => {
+    const content = 'KEY=two words # comment\n'
+    const result = findUnquotedSpaces(content)
+    assert.equal(result.length, 1)
+    assert.equal(result[0].key, 'KEY')
+    assert.equal(result[0].value, 'two words')
+  })
+
+  it('handles export prefix', () => {
+    const content = 'export APP_NAME=My App\n'
+    const result = findUnquotedSpaces(content)
+    assert.equal(result.length, 1)
+    assert.equal(result[0].key, 'APP_NAME')
+  })
+
+  it('skips exported quoted values', () => {
+    const content = 'export APP_NAME="My App"\n'
+    const result = findUnquotedSpaces(content)
+    assert.equal(result.length, 0)
+  })
+
+  it('returns correct line numbers', () => {
+    const content = '# comment\nAPP_ENV=production\nAPP_NAME=My App\n\nTITLE=Hello World\n'
+    const result = findUnquotedSpaces(content)
+    assert.equal(result.length, 2)
+    assert.equal(result[0].line, 3)
+    assert.equal(result[1].line, 5)
   })
 })

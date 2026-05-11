@@ -36,7 +36,8 @@ envaudit/
 │   │   ├── missing.js          # Keys in .env.example but not in .env
 │   │   ├── undocumented.js     # Keys in .env but not in .env.example
 │   │   ├── empty-values.js     # Keys with empty values in .env
-│   │   └── secrets.js          # Possible real secrets in .env.example
+│   │   ├── secrets.js          # Possible real secrets in .env.example
+│   │   └── unquoted-spaces.js  # Unquoted values containing spaces
 │   └── output.js               # Terminal output formatting (colors via ANSI codes)
 ├── tests/
 │   └── (test files using node:test)
@@ -59,7 +60,7 @@ Flags:
 - `--no-color` — disable colored output
 
 Output categories:
-1. **Errors (✗):** Missing variables (in .env.example but not in .env), possible secrets in .env.example
+1. **Errors (✗):** Missing variables (in .env.example but not in .env), possible secrets in .env.example, unquoted values with spaces in .env
 2. **Warnings (⚠):** Undocumented variables (in .env but not in .env.example), empty values
 3. **Summary line:** "X issues found (N errors · M warnings)" or "All good ✓"
 
@@ -159,7 +160,7 @@ Create fixture `.env` files in `tests/fixtures/` for test cases.
 ```json
 {
   "name": "@albertoarena/envaudit",
-  "version": "0.1.4",
+  "version": "1.0.0",
   "description": "Zero-dependency CLI to audit, compare and sync .env files",
   "type": "module",
   "bin": {
