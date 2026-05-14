@@ -1,6 +1,6 @@
 # Plan: Branch Protection Ruleset for `main`
 
-**Status: PENDING**
+**Status: COMPLETED** (2026-05-14)
 
 ## Goal
 
@@ -13,7 +13,7 @@ Protect the `main` branch so that:
 
 ## Steps
 
-### Step 1: Create CI workflow (`.github/workflows/ci.yml`)
+### Step 1: Create CI workflow (`.github/workflows/ci.yml`) — DONE
 
 A GitHub Actions workflow that runs tests on every push to `main` and on every PR targeting `main`.
 
@@ -59,13 +59,16 @@ jobs:
 
 ---
 
-### Step 2: Push workflow to `main`, verify it passes
+### Step 2: Push workflow to `main`, verify it passes — DONE
 
 Commit and push the CI workflow to `main` so that the status check contexts exist in GitHub (required before they can be referenced in a ruleset).
 
 ---
 
-### Step 3: Create branch ruleset via GitHub API
+### Step 3: Create branch ruleset via GitHub API — DONE
+
+**Ruleset ID:** `16381476`
+**URL:** https://github.com/albertoarena/envaudit/rules/16381476
 
 Once CI has run successfully, create the ruleset:
 
@@ -138,10 +141,10 @@ EOF
 
 ---
 
-### Step 4: Verify
+### Step 4: Verify — DONE
 
-- Confirm ruleset is active: `gh api repos/albertoarena/envaudit/rulesets`
-- Confirm CI workflow passed on `main`
+- Ruleset is active and visible in Settings > Rulesets
+- CI workflow ran successfully on push (all 3 Node versions passed)
 
 ---
 
@@ -150,13 +153,13 @@ EOF
 To delete the ruleset:
 
 ```bash
-gh api repos/albertoarena/envaudit/rulesets/{RULESET_ID} --method DELETE
+gh api repos/albertoarena/envaudit/rulesets/16381476 --method DELETE
 ```
 
 To update the ruleset:
 
 ```bash
-gh api repos/albertoarena/envaudit/rulesets/{RULESET_ID} \
+gh api repos/albertoarena/envaudit/rulesets/16381476 \
   --method PUT \
   --input - <<'EOF'
 { ... updated JSON ... }
