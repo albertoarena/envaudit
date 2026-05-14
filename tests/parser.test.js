@@ -1,9 +1,11 @@
 import { describe, it } from 'node:test'
 import { strict as assert } from 'node:assert'
 import { parseLine, parseEnvContent, parseEnvFile } from '../src/parser.js'
-import { join } from 'path'
+import { join, dirname } from 'path'
+import { fileURLToPath } from 'url'
 
-const fixtures = join(import.meta.dirname, 'fixtures')
+const __dirname = dirname(fileURLToPath(import.meta.url))
+const fixtures = join(__dirname, 'fixtures')
 
 describe('parseLine', () => {
   it('parses basic KEY=value', () => {

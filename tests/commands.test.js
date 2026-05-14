@@ -1,9 +1,11 @@
 import { describe, it, beforeEach, afterEach } from 'node:test'
 import { strict as assert } from 'node:assert'
-import { join } from 'path'
+import { join, dirname } from 'path'
+import { fileURLToPath } from 'url'
 import { writeFileSync, unlinkSync, readFileSync } from 'fs'
 
-const fixtures = join(import.meta.dirname, 'fixtures')
+const __dirname = dirname(fileURLToPath(import.meta.url))
+const fixtures = join(__dirname, 'fixtures')
 
 // Capture console output
 function captureOutput(fn) {
