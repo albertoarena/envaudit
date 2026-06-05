@@ -1,5 +1,7 @@
 # envaudit
 
+![Traffic](https://raw.githubusercontent.com/albertoarena/envaudit/traffic-data/badge.svg)
+
 Zero-dependency CLI to audit, compare and sync `.env` files.
 
 Compares `.env` against `.env.example`, detects missing variables, undocumented variables, empty values, and possible secrets leaked into `.env.example`.
