@@ -1,6 +1,6 @@
 # envaudit
 
-![Traffic](https://raw.githubusercontent.com/albertoarena/envaudit/traffic-data/badge.svg)
+![Traffic](https://raw.githubusercontent.com/albertoarena/envaudit/traffic-data/badge.svg?v=1)
 
 Zero-dependency CLI to audit, compare and sync `.env` files.
 
