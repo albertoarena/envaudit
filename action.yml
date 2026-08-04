@@ -1,0 +1,49 @@
+name: 'envaudit'
+description: 'Audit, compare and sync .env files — zero-dependency CLI'
+author: 'Alberto Arena'
+
+branding:
+  icon: 'check-circle'
+  color: 'green'
+
+inputs:
+  command:
+    description: 'Command to run: check, sync or doc (use npx directly for diff)'
+    required: false
+    default: 'check'
+  env:
+    description: 'Path to the .env file'
+    required: false
+    default: '.env'
+  example:
+    description: 'Path to the .env.example file'
+    required: false
+    default: '.env.example'
+  ci:
+    description: 'Exit with code 1 if errors are found'
+    required: false
+    default: 'true'
+  ignore-empty:
+    description: 'Skip empty value warnings (secrets injected at runtime)'
+    required: false
+    default: 'false'
+  no-color:
+    description: 'Disable colored output'
+    required: false
+    default: 'true'
+
+runs:
+  using: 'composite'
+  steps:
+    # Runs the tool straight from this action's checkout — zero dependencies,
+    # so there is nothing to install and no npm download per run. Node.js is
+    # preinstalled on all GitHub-hosted runners.
+    - name: Run envaudit
+      shell: bash
+      run: |
+        flags=(--env "${{ inputs.env }}" --example "${{ inputs.example }}")
+        [ "${{ inputs.ci }}" = "true" ] && flags+=(--ci)
+        [ "${{ inputs.ignore-empty }}" = "true" ] && flags+=(--ignore-empty)
+        [ "${{ inputs.no-color }}" = "true" ] && flags+=(--no-color)
+        node "$GITHUB_ACTION_PATH/bin/envaudit.js" \
+          "${{ inputs.command }}" "${flags[@]}"

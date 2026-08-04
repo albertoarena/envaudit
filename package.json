@@ -1,12 +1,13 @@
 {
   "name": "@albertoarena/envaudit",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Zero-dependency CLI to audit, compare and sync .env files",
   "type": "module",
   "bin": {
     "envaudit": "bin/envaudit.js"
   },
-  "keywords": ["env", "dotenv", "lint", "diff", "cli", "audit", "secrets"],
+  "keywords": ["env", "dotenv", "lint", "diff", "cli", "audit", "secrets", "github-actions", "ci"],
+  "author": "Alberto Arena <arena.alberto@gmail.com> (https://github.com/albertoarena)",
   "license": "MIT",
   "repository": {
     "type": "git",

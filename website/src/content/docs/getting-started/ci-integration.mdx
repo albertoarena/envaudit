@@ -7,13 +7,54 @@ Use `--ci` to exit with code 1 when errors are found, and `--no-color` for clean
 
 ## GitHub Actions
 
+The quickest way is the published action:
+
+```yaml
+- uses: albertoarena/envaudit@v1
+  with:
+    ignore-empty: true   # secrets injected at runtime
+```
+
+Inputs (all optional):
+
+| Input | Default | Description |
+|-------|---------|-------------|
+| `command` | `check` | Command to run: `check`, `sync` or `doc` |
+| `env` | `.env` | Path to the `.env` file |
+| `example` | `.env.example` | Path to the `.env.example` file |
+| `ci` | `true` | Exit with code 1 if errors are found |
+| `ignore-empty` | `false` | Skip empty value warnings |
+| `no-color` | `true` | Disable colored output |
+
+The tool version is whatever action tag you pin (`@v1`, `@v1.1.0`). You can also call the CLI directly:
+
 ```yaml
 - name: Audit env files
   run: npx @albertoarena/envaudit check --ci --no-color
+```
 
-# Skip empty value warnings (secrets injected at runtime)
-- name: Audit env files
-  run: npx @albertoarena/envaudit check --ci --no-color --ignore-empty
+### The gitignored `.env` catch
+
+`.env` is usually gitignored, so on a fresh checkout only `.env.example` exists and `check` has nothing to compare against. Two realistic setups:
+
+**A. Validate `.env.example` only** — typical for public repos. Catches leaked secrets, unquoted values with spaces, and duplicate keys in the example file itself:
+
+```yaml
+- run: cp .env.example .env
+- uses: albertoarena/envaudit@v1
+  with:
+    ignore-empty: true
+```
+
+**B. Validate the real env in a deploy pipeline** — build `.env` from GitHub Secrets, then confirm nothing declared in the example is missing before shipping:
+
+```yaml
+- name: Build .env
+  run: |
+    cp .env.example .env
+    echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
+    echo "APP_KEY=${{ secrets.APP_KEY }}" >> .env
+- uses: albertoarena/envaudit@v1
 ```
 
 ## GitLab CI
@@ -21,7 +62,8 @@ Use `--ci` to exit with code 1 when errors are found, and `--no-color` for clean
 ```yaml
 audit-env:
   script:
-    - npx @albertoarena/envaudit check --ci --no-color
+    - cp .env.example .env
+    - npx @albertoarena/envaudit check --ci --no-color --ignore-empty
 ```
 
 ## Other CI systems

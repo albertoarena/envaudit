@@ -71,23 +71,54 @@ Outputs a table grouped by prefix (DB_, APP_, AWS_, etc.) with columns: Variable
 
 ## CI Integration
 
-Add to your CI pipeline to catch env mismatches early:
+### GitHub Actions
+
+Use the action:
 
 ```yaml
-# GitHub Actions
-- name: Check env files
-  run: npx @albertoarena/envaudit check --ci --no-color
-
-# Skip empty value warnings (secrets injected at runtime)
-- name: Check env files
-  run: npx @albertoarena/envaudit check --ci --no-color --ignore-empty
+- uses: albertoarena/envaudit@v1
+  with:
+    ignore-empty: true   # secrets injected at runtime
 ```
 
+Inputs (all optional): `command` (default `check`), `env`, `example`, `ci` (default `true`), `ignore-empty`, `no-color` (default `true`). The tool version is whatever tag you pin (`@v1`, `@v1.1.0`).
+
+Or call the CLI directly:
+
 ```yaml
-# GitLab CI
-check-env:
+- name: Audit env files
+  run: npx @albertoarena/envaudit@1.1.0 check --ci --no-color
+```
+
+**Heads up:** `.env` is usually gitignored, so on a fresh checkout only `.env.example` exists and `check` has nothing to compare against. Two realistic setups:
+
+**A. Validate `.env.example` only** (typical for public repos). Catches leaked secrets, unquoted values with spaces, and duplicate keys in the example file itself:
+
+```yaml
+- run: cp .env.example .env
+- uses: albertoarena/envaudit@v1
+  with:
+    ignore-empty: true
+```
+
+**B. Validate the real env in a deploy pipeline.** Build `.env` from GitHub Secrets, then confirm nothing declared in the example is missing before shipping:
+
+```yaml
+- name: Build .env
+  run: |
+    cp .env.example .env
+    echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
+    echo "APP_KEY=${{ secrets.APP_KEY }}" >> .env
+- uses: albertoarena/envaudit@v1
+```
+
+### GitLab CI
+
+```yaml
+audit-env:
   script:
-    - npx @albertoarena/envaudit check --ci --no-color
+    - cp .env.example .env
+    - npx @albertoarena/envaudit check --ci --no-color --ignore-empty
 ```
 
 ## Options

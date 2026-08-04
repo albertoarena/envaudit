@@ -1,9 +1,14 @@
 #!/usr/bin/env node
 
+import { readFileSync } from 'node:fs'
 import { check } from '../src/commands/check.js'
 import { diff } from '../src/commands/diff.js'
 import { sync } from '../src/commands/sync.js'
 import { doc } from '../src/commands/doc.js'
+
+const pkg = JSON.parse(
+  readFileSync(new URL('../package.json', import.meta.url), 'utf8')
+)
 
 const args = process.argv.slice(2)
 const command = args[0]
@@ -39,7 +44,7 @@ Options:
 }
 
 function printVersion() {
-  console.log('envaudit 0.1.0')
+  console.log(`envaudit ${pkg.version}`)
 }
 
 if (hasFlag('--help') || hasFlag('-h') || !command) {
